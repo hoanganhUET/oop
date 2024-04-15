@@ -1,4 +1,4 @@
-public class RandomWalk(fixed) {
+public class RandomWalk {
 
     public static void main(String[] args) {
         int n = Integer.parseInt(args[0]);
