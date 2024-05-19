@@ -12,16 +12,18 @@ import java.util.Random;
 
 public class YellowGhost extends Entity {
     GamePanel gp;
+    Player player;
     private int moveCount = 0;
     private boolean initialMoveDone = false;
     private int currentDirection = -1;
     TileManager tileManager;
     private Collision collision;
 
-    public YellowGhost(TileManager tileManager, GamePanel gp) {
+    public YellowGhost(TileManager tileManager, GamePanel gp, Player player) {
         this.tileManager = tileManager;
         this.gp = gp;
-        this.sprite = new BufferedImage[8];
+        this.player = player;
+        this.sprite = new BufferedImage[9];
         this.x = 33 * 16;
         this.y = 6 * 16;
         this.speed = 1;
@@ -42,6 +44,9 @@ public class YellowGhost extends Entity {
             for (int i = 0; i < 8; i++) {
                 sprite[i] = ghostImage.getSubimage(i * 16, 0, 16, 16);
             }
+            InputStream in2 = getClass().getResourceAsStream("/orangeGhost.png");
+            BufferedImage orangeGhostImage = ImageIO.read(in2);
+            sprite[8] = orangeGhostImage.getSubimage(0, 0, 16, 16);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -133,6 +138,12 @@ public class YellowGhost extends Entity {
     }
 
     public void draw(Graphics2D g2) {
-        g2.drawImage(sprite[spriteCounter], x, y, null);
+        if (player.isPoweredUp()) {
+            g2.drawImage(sprite[8], x, y, null);
+            return;
+        }
+        else {
+            g2.drawImage(sprite[spriteCounter], x, y, null);
+        }
     }
 }

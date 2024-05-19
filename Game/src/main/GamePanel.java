@@ -24,10 +24,10 @@ public class GamePanel extends JPanel implements Runnable {
     int FPS = 60;
     TileManager tileM = new TileManager(this);
     Player player = new Player(this, KeyH, tileM);
-    RedGhost redGhost = new RedGhost(tileM, this);
-    BlueGhost blueGhost = new BlueGhost(tileM, this);
-    GreenGhost greenGhost = new GreenGhost(tileM, this);
-    YellowGhost yellowGhost = new YellowGhost(tileM, this);
+    RedGhost redGhost = new RedGhost(tileM, this, player);
+    BlueGhost blueGhost = new BlueGhost(tileM, this,player);
+    GreenGhost greenGhost = new GreenGhost(tileM, this, player);
+    YellowGhost yellowGhost = new YellowGhost(tileM, this,player);
     public SuperObject[] obj = new SuperObject[10];
     public int gameState;
     public final int playState = 0;

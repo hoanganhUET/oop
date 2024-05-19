@@ -13,13 +13,15 @@ import java.util.Random;
 public class BlueGhost extends Entity {
     GamePanel gp;
     private int moveCount = 0;
+    Player player;
     private boolean initialMoveDone = false;
     TileManager tileManager;
     private Collision collision;
-    public BlueGhost(TileManager tileManager, GamePanel gp) {
+    public BlueGhost(TileManager tileManager, GamePanel gp,Player player) {
+        this.player = player;
         this.tileManager = tileManager;
         this.gp = gp;
-        this.sprite = new BufferedImage[8];
+        this.sprite = new BufferedImage[9];
         this.x = 33 * 16;
         this.y = 6 * 16;
         this.speed = 1;
@@ -40,6 +42,10 @@ public class BlueGhost extends Entity {
             for (int i = 0; i < 8; i++) {
                 sprite[i] = ghostImage.getSubimage(i * 16, 0, 16, 16);
             }
+            InputStream in2 = getClass().getResourceAsStream("/orangeGhost.png");
+            BufferedImage orangeGhostImage = ImageIO.read(in2);
+            sprite[8] = orangeGhostImage.getSubimage(0, 0, 16, 16);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -132,6 +138,12 @@ public class BlueGhost extends Entity {
     }
 
     public void draw(Graphics2D g2) {
-        g2.drawImage(sprite[spriteCounter], x, y, null);
+
+        if (player.isPoweredUp()) {
+            g2.drawImage(sprite[8], x, y, null);
+        }
+        else{
+            g2.drawImage(sprite[spriteCounter], x, y, null);
+        }
     }
 }

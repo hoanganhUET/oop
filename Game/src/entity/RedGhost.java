@@ -13,11 +13,13 @@ import java.util.Random;
 public class RedGhost extends Entity {
     GamePanel gp;
     TileManager tileManager;
+    Player player;
     private Collision collision;
-    public RedGhost(TileManager tileManager, GamePanel gp) {
+    public RedGhost(TileManager tileManager, GamePanel gp, Player player) {
         this.tileManager = tileManager;
         this.gp = gp;
-        this.sprite = new BufferedImage[8];
+        this.player = player;
+        this.sprite = new BufferedImage[9];
         this.x = 33 * 16;
         this.y = 4 * 16;
         this.speed = 1;
@@ -38,6 +40,9 @@ public class RedGhost extends Entity {
             for (int i = 0; i < 8; i++) {
                 sprite[i] = ghostImage.getSubimage(i * 16, 0, 16, 16);
             }
+            InputStream in2 = getClass().getResourceAsStream("/orangeGhost.png");
+            BufferedImage orangeGhostImage = ImageIO.read(in2);
+            sprite[8] = orangeGhostImage.getSubimage(0, 0, 16, 16);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -119,6 +124,12 @@ public class RedGhost extends Entity {
     }
 
     public void draw(Graphics2D g2) {
-        g2.drawImage(sprite[spriteCounter], x, y, null);
+        if (player.isPoweredUp()) {
+            g2.drawImage(sprite[8], x, y, null);
+            return;
+        }
+        else {
+            g2.drawImage(sprite[spriteCounter], x, y, null);
+        }
     }
 }
